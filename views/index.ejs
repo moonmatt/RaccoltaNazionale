@@ -1,24 +1,27 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<title>Document</title>
+</head>
 <body>
-	<head>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-		<title>Ciao come stai? RASPBERRY PI</title>
-	</head>
 <div class="container">
-<h1>Ciaone</h1>
-<p>
-<% postArr.forEach(post => { %>
-	<%= post.title %> <br>
-	<%= post.content %> <br>
-	<%= post.url %>  
-<br>
-<hr>
-<% })%>
+	<h1>RaccoltaNazionale Node Edition</h1>
+	<% postArr.forEach(post => {%>
+		<% urlArr = [post.title, post.content, post.url, post.date] %> 
+		<% post.content = post.content.substring(1, 4) %> 
+		<b id="prova"><%= post.title%></b> <br>
+		<%= post.content %> <br>
+		<h5 onclick="strip_html_tags('ciao')">Leggi tutto</h5>
+		<a href="<%= post.url %>"><button class="btn btn-success">Sul sito</button></a>
+		<% if(post.content != ""){ %> 
+		<a href="./articles?p=<%= encodeURIComponent(urlArr) %>" ><button class="btn btn-success">Qui (consigliato)</button></a>
+		<% } %> 
+		<hr>
+	<% })%>
 </div>
-<script>
-function popup(content){
-	console.log(content);
-}
-</script>
-</body>	
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+</body>
 </html>
