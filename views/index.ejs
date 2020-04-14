@@ -11,10 +11,9 @@
 	<h1>RaccoltaNazionale Node Edition</h1>
 	<% postArr.forEach(post => {%>
 		<% urlArr = [post.title, post.content, post.url, post.date] %> 
-		<% post.content = post.content.substring(1, 4) %> 
-		<b id="prova"><%= post.title%></b> <br>
-		<%= post.content %> <br>
-		<h5 onclick="strip_html_tags('ciao')">Leggi tutto</h5>
+		<b><%= post.title%></b> <br>
+		<%= post.content.substring(0, 50) %> <br>
+		<h5>Leggi tutto</h5>
 		<a href="<%= post.url %>"><button class="btn btn-success">Sul sito</button></a>
 		<% if(post.content != ""){ %> 
 		<a href="./articles?p=<%= encodeURIComponent(urlArr) %>" ><button class="btn btn-success">Qui (consigliato)</button></a>
