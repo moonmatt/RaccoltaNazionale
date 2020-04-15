@@ -11,7 +11,8 @@ const parser = new Parser({
   }
 })
 app.set('view engine', 'ejs')
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/']
 let postArr = [];

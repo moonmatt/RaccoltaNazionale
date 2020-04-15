@@ -3,24 +3,55 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
 	<title>Document</title>
 </head>
 <body>
 <div class="container">
 	<h1>RaccoltaNazionale Node Edition</h1>
 	<% postArr.forEach(post => {%>
-		<% urlArr = post.title + "###!###" +  post.content + "###!###" +  post.date + "###!###" + post.image %> 
+		<% urlArr = [post.title, post.content, post.date, post.image]; %> 
 		<img src="<%= post.image %> " alt=""> <br>
-		<b><%= post.title%></b> <br> <br>
+		<b><%= post.title %></b> <br> <br>
 		<%= post.description %> <br> <br>
 		<b>Leggi tutto</b> - <%= post.journal %> - <%= post.date  %>  <br> <br>
 		<a href="<%= post.url %>"><button class="btn btn-success">Sul sito</button></a>
+		<button id="readMore" onclick='ciao("<%= encodeURIComponent(urlArr) %>")'>Prova</button>
 		<% if(post.content != ""){ %> 
 		<a href="./articles?p=<%= encodeURIComponent(urlArr) %>" ><button class="btn btn-success">Qui (consigliato)</button></a>
 		<% } %> 
 		<hr>
+		<script>
+			function ciao(urlArr) {
+				console.log("1");
+				$.ajax({
+					url: '/articles',
+					method: "POST",
+					data: JSON.stringify({ urlArr: urlArr }),
+					contentType: 'application/json',
+					success: function(data){
+						window.location = "/articles";
+					}
+				})
+			}
+		</script>
 	<% })%>
 </div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- <script>
+$(function() {
+	// GET/READ
+	function(){
+        $.ajax({
+			url: '/articles',
+			method: "POST",
+			data: JSON.stringify({ name: 'prova' }),
+			contentType: 'application/json',
+			success: function(response){
+				console.log(response)
+			}
+		})}
+})
+</script> -->
 </body>
 </html>
