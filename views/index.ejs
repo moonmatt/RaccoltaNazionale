@@ -10,10 +10,11 @@
 <div class="container">
 	<h1>RaccoltaNazionale Node Edition</h1>
 	<% postArr.forEach(post => {%>
-		<% urlArr = [post.title, post.content, post.url, post.date] %> 
-		<b><%= post.title%></b> <br>
-		<%= post.content.substring(0, 50) %> <br>
-		<h5>Leggi tutto</h5>
+		<% urlArr = post.title + "###!###" +  post.content + "###!###" +  post.date + "###!###" + post.image %> 
+		<img src="<%= post.image %> " alt=""> <br>
+		<b><%= post.title%></b> <br> <br>
+		<%= post.description %> <br> <br>
+		<b>Leggi tutto</b> - <%= post.journal %>  <br> <br>
 		<a href="<%= post.url %>"><button class="btn btn-success">Sul sito</button></a>
 		<% if(post.content != ""){ %> 
 		<a href="./articles?p=<%= encodeURIComponent(urlArr) %>" ><button class="btn btn-success">Qui (consigliato)</button></a>
