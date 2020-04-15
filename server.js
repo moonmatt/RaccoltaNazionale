@@ -13,10 +13,13 @@ const parser = new Parser({
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: true }))
 
+let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/']
 let postArr = [];
-(async () => {
+
+journals.forEach(url => rssReader(url));
+async function rssReader(url){
  
-  let feed = await parser.parseURL('https://www.liberoquotidiano.it/rss.xml');
+  let feed = await parser.parseURL(url);
  
   feed.items.forEach(item => {
     try{
@@ -28,22 +31,21 @@ let postArr = [];
       title: item.title,
       url: item.link, 
       date: item.pubDate,
-      content: tools.escapeHtml(item.description), 
-      description: tools.escapeHtml(item.description).substring(0,200),
+      content: item.description, 
+      description: tools.escapeHtml(item.description).substring(0,200) + "...",
       journal: feed.title,
       image: image
     }
     postArr.push(post)
   });
  
-})();
-
+};
 app.use('/articles', articleRouter)
 
 app.get('/', function (req, res) {
+  postArr.sort(tools.sortFunction).reverse()
   res.render('index', {postArr: postArr})
 })
-
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
