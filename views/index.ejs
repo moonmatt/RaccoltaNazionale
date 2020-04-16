@@ -10,48 +10,35 @@
 <div class="container">
 	<h1>RaccoltaNazionale Node Edition</h1>
 	<% postArr.forEach(post => {%>
-		<% urlArr = [post.title, post.content, post.date, post.image]; %> 
+		<% newArr = post.title + "###!###" + post.content + "###!###" + post.date + "###!###" + post.image %>
 		<img src="<%= post.image %> " alt=""> <br>
-		<b><%= post.title %></b> <br> <br>
+		<b id="<%= encodeURIComponent(post.title) %>"><%= post.title %></b> <br> <br>
 		<%= post.description %> <br> <br>
 		<b>Leggi tutto</b> - <%= post.journal %> - <%= post.date  %>  <br> <br>
 		<a href="<%= post.url %>"><button class="btn btn-success">Sul sito</button></a>
-		<button id="readMore" onclick='ciao("<%= encodeURIComponent(urlArr) %>")'>Prova</button>
+		<button id="readMore" onclick="ciao(`<%= newArr %>`)" class="btn btn-success">Qui (consigliato)</button>
 		<% if(post.content != ""){ %> 
-		<a href="./articles?p=<%= encodeURIComponent(urlArr) %>" ><button class="btn btn-success">Qui (consigliato)</button></a>
 		<% } %> 
 		<hr>
-		<script>
-			function ciao(urlArr) {
-				console.log("1");
-				$.ajax({
-					url: '/articles',
-					method: "POST",
-					data: JSON.stringify({ urlArr: urlArr }),
-					contentType: 'application/json',
-					success: function(data){
-						window.location = "/articles";
-					}
-				})
-			}
-		</script>
 	<% })%>
 </div>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<!-- <script>
-$(function() {
-	// GET/READ
-	function(){
-        $.ajax({
+
+<script>
+	function ciao(newArr) {
+		console.log(encodeURIComponent(newArr.split("###!###")[0]))
+		$.ajax({
+			data: JSON.stringify({ newArr: newArr }),
 			url: '/articles',
 			method: "POST",
-			data: JSON.stringify({ name: 'prova' }),
 			contentType: 'application/json',
-			success: function(response){
-				console.log(response)
+			success: function(data){
+				// console.log(data)
+				document.documentElement.innerHTML = data;
+				
 			}
-		})}
-})
-</script> -->
+		})
+	}
+</script>
 </body>
 </html>
