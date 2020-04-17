@@ -2,14 +2,23 @@
 <body>
 	<head>
 		<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Ciao come stai?</title>
 	</head>
 <div class="container">
-<a href="/">Home</a>
-<img src="<%= newArr[3]  %> " alt=""> <br>
-<h1><%= newArr[0] %> </h1> <hr> <br>
-<div id="content"><%- newArr[1]  %></div> <br> <hr>
-<p><%= newArr[2] %> </p>
+<a onclick="redirectHome(`<%= encodeURIComponent(title) %>`)">Home</a>
+<img src="<%= image  %> " alt=""> <br>
+<h1><%= title %> </h1> <hr> <br>
+<div id="content"><%- content %></div> <br> <hr>
+<p><%= journal %> - <%= date %> </p>
+
+<p></p>
 </div>
+<script>
+	function redirectHome(url){
+		document.cookie = ""
+		window.location = "/#" + url
+	}
+</script>
 </body>	
 </html>
