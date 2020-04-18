@@ -4,23 +4,13 @@ const cookieParser = require('cookie-parser')
 router.use(cookieParser())
 
 router.get('/', (req, res) => {
-    console.log("ok ci siamo")
-    var cookie = req.cookies['title']
-    console.log(cookie)
-    // cookie = decodeURIComponent(cookie)
-    // let cookieArr = cookie.split("###!###")
-    // console.log(cookieArr)
-    // res.render('post', {title: cookieArr[0], content: cookieArr[1], date: cookieArr[2], image: cookieArr[3], journal: cookieArr[4]})
-
-        // var cookie = getcookie(req).toString();
-    // cookie = decodeURIComponent(cookie)
-    // if(cookie != ""){
-    //     let cookieArr = cookie.split("###!###")
-    //     console.log(cookieArr)
-    //     res.render('post', {title: cookieArr[0], content: cookieArr[1], date: cookieArr[2], image: cookieArr[3], journal: cookieArr[4]})
-    // } else {
-    //     console.log("Ci scusiamo ma si è verificato un problema")
-    //     res.redirect('/?errore');
-    // }
+    var title = req.cookies['title']
+    var content = req.cookies['content']
+    var date = req.cookies['date']
+    var image = req.cookies['image']
+    var journal = req.cookies['journal']
+    if(title != ""){
+        res.render('post', {title: title, content: content, date: date, image: image, journal: journal})
+    }
 })
 module.exports = router

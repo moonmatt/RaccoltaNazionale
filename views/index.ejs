@@ -15,7 +15,7 @@
 		<%= post.description %> <br> <br>
 		<b>Leggi tutto</b> - <%= post.journal %> - <%= post.date  %>  <br> <br>
 		<a href="<%= post.url %>"><button class="btn btn-success">Sul sito</button></a>
-		<button id="readMore" onclick="sendCookie(`<%= post.title %>`,`<%= post.content %>`,`<%= post.data %>`,`<%= post.date %>`,`<%= post.image %>`,`<%= post.journale %>`)" class="btn btn-success">Qui (consigliato)</button>
+		<button id="readMore" onclick="sendCookie(`<%= post.title %>`,` <%= encodeURIComponent(post.content) %>`,` <%= post.date %>`,` <%= post.image %>`,` <%= post.journal %>`)" class="btn btn-success">Qui (consigliato)</button>
 		<% if(post.content != ""){ %> 
 		<% } %> 
 		<hr>
@@ -23,11 +23,13 @@
 </div>
 <script>
 	function sendCookie(title, content, date, image, journal) {
-		console.log(title)
-		// document.cookie = ""
-		// document.cookie = "title="+title+";content="+content+";date="+date+";image="+image+";journal="+journal+";";
-		// console.log(document.cookie)
-		// window.location = "/articles"
+		document.cookie = ""
+		document.cookie = `title= ${title}`
+		document.cookie = `content= ${content}`
+		document.cookie = `date= ${date}`
+		document.cookie = `image= ${image}`
+		document.cookie = `journal= ${journal}`
+		window.location = "/articles"
 	}
 </script>
 </body>
