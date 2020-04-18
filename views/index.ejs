@@ -15,7 +15,7 @@
 		<%= post.description %> <br> <br>
 		<b>Leggi tutto</b> - <%= post.journal %> - <%= post.date  %>  <br> <br>
 		<a href="<%= post.url %>"><button class="btn btn-success">Sul sito</button></a>
-		<button id="readMore" onclick="sendCookie(`<%= post.title %>`,` <%= encodeURIComponent(post.content) %>`,` <%= post.date %>`,` <%= post.image %>`,` <%= post.journal %>`)" class="btn btn-success">Qui (consigliato)</button>
+		<button id="readMore" onclick="sendCookie(`<%= encodeURIComponent(post.title) %>`,` <%= encodeURIComponent(post.content) %>`,` <%= post.date %>`,` <%= post.image %>`,` <%= post.journal %>`)" class="btn btn-success">Qui (consigliato)</button>
 		<% if(post.content != ""){ %> 
 		<% } %> 
 		<hr>
