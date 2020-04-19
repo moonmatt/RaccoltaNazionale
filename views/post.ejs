@@ -5,19 +5,29 @@
 		<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Ciao come stai?</title>
+		<style>
+			img {
+				width: 100%;
+			}
+		</style>
 	</head>
 <div class="container">
-<a onclick="redirectHome(`<%= encodeURIComponent(title) %>`)">Home</a>
-<img src="<%= image  %> " alt=""> <br>
-<h1><%= title %> </h1> <hr> <br>
-<div id="content"><%- content %></div> <br> <hr>
-<p><%= journal %> - <%= date %> </p>
-
-<p></p>
+<div class="row mt-3">
+	<div class="col-3" data-spy="affix" data-offset-top="205">
+		<button class="btn btn-success btn-block" onclick="redirectHome(`<%= encodeURIComponent(title) %>`)">Torna indietro</button>
+		<br>
+		<div class="jumbotron">ciao</div>
+	</div>
+	<div class="col-9">
+		<img src="<%= image  %> " alt=""> <br>
+		<h1><%= title %> </h1> <hr> <br>
+		<div id="content" class="lead"><%- content %></div> <br> <hr>
+		<p><%= journal %> - <%= date %> </p>
+	</div>
+</div>
 </div>
 <script>
 	function redirectHome(url){
-		document.cookie = ""
 		window.location = "/#" + url
 	}
 </script>

@@ -1,16 +1,20 @@
 const express = require('express')
 const router = express.Router()
-const cookieParser = require('cookie-parser')
-router.use(cookieParser())
+const bodyParser = require('body-parser')
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
 
-router.get('/', (req, res) => {
-    var title = req.cookies['title']
-    var content = req.cookies['content']
-    var date = req.cookies['date']
-    var image = req.cookies['image']
-    var journal = req.cookies['journal']
+router.post('/', (req, res) => {
+    var title = req.body.title
+    var content = req.body.content
+    var date = req.body.date
+    var image = req.body.image
+    var journal = req.body.journal
     if(title != ""){
         res.render('post', {title: title, content: content, date: date, image: image, journal: journal})
+    } else {
+        res.status(404)
+        .send('Not found');
     }
 })
 module.exports = router

@@ -5,32 +5,52 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
 	<title>Document</title>
+	<script
+  src="https://code.jquery.com/jquery-3.5.0.min.js"
+  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+  crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
+	<div class="row">
+		<div class="col-3">
+			<div class="jumbotron sticky-top">ciaone</div>
+		</div>
+		<div class="col-9">
 	<h1>RaccoltaNazionale Node Edition</h1>
 	<% postArr.forEach(post => {%>
-		<img src="<%= post.image %> " id="<%= encodeURIComponent(post.title) %>"> <br>
+		<img src="<%= post.image %>" class="img-fluid" id="<%= encodeURIComponent(post.title) %>"> <br>
 		<b><%= post.title %></b> <br> <br>
 		<%= post.description %> <br> <br>
 		<b>Leggi tutto</b> - <%= post.journal %> - <%= post.date  %>  <br> <br>
 		<a href="<%= post.url %>"><button class="btn btn-success">Sul sito</button></a>
-		<button id="readMore" onclick="sendCookie(`<%= encodeURIComponent(post.title) %>`,` <%= encodeURIComponent(post.content) %>`,` <%= post.date %>`,` <%= post.image %>`,` <%= post.journal %>`)" class="btn btn-success">Qui (consigliato)</button>
-		<% if(post.content != ""){ %> 
+		<% if(post.description != ""){ %>
+			<form action="/articles" method="POST">
+				<input type="hidden" name="title" value="<%= post.title %>">
+				<input type="hidden" name="content" value="<%= post.content %>">
+				<input type="hidden" name="date" value="<%= post.date %>">
+				<input type="hidden" name="image" value="<%= post.image %>">
+				<input type="hidden" name="journal" value="<%= post.journal %>">
+				<input type="submit" name="send" value="Leggi qui" class="btn btn-success d-inline-block"> 
+			</form>
 		<% } %> 
 		<hr>
 	<% })%>
 </div>
-<script>
-	function sendCookie(title, content, date, image, journal) {
+</div>
+</div>
+<!-- <script>
+	async function sendCookie(title, content, date, image, journal) {
 		document.cookie = ""
-		document.cookie = `title= ${title}`
-		document.cookie = `content= ${content}`
-		document.cookie = `date= ${date}`
-		document.cookie = `image= ${image}`
-		document.cookie = `journal= ${journal}`
+
+		document.cookie = await `title= ${title}`
+		document.cookie = await `content= ${content}`
+		document.cookie = await `date= ${date}`
+		document.cookie = await `image= ${image}`
+		document.cookie = await `journal= ${journal}`
 		window.location = "/articles"
 	}
-</script>
+</script> -->
 </body>
 </html>
