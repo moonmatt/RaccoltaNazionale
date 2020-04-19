@@ -20,20 +20,14 @@ app.use(cookiep());
 app.set('trust proxy', 1);
 
 app.use(session({
-  secret: uuid.v4(), // va bene un qualsiasi valore randomico, puoi anche usare crypto.randomBytes(8).toString()
   resave: false,
   saveUninitialized: true,
-  cookie: {
-      secure: true,
-      httpOnly: true,
-      domain: 'localhost:3000',
-      expires: new Date(Date.now() + 7200000),
-      sameSite: true
-  },
-  name: 'COMPUTER'
-}))
+  secret: 'sdlfjljrowuroweu',
+  cookie: { secure: false }
+}));
 
 let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.laverita.info/feeds/feed.rss', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
+// let journals = ['https://www.ilgiornale.it/feed.xml']
 let postArr = [];
 
 journals.forEach(url => rssReader(url));
@@ -65,15 +59,15 @@ app.use('/db', dbRouter)
 
 
 app.get('/', function (req, res) {
-  console.log(req.session)
-  postArr.sort(tools.sortFunction).reverse()
-  res.render('index', {postArr: postArr})
   if(req.session.username){
-    console.log("SESSIONE SETTATA")
+    postArr.sort(tools.sortFunction).reverse()
+    res.render('index', {postArr: postArr})
+    console.log(postArr.length)
   } else {
     console.log("NON SETTATA")
+    res.redirect('/login')
   }
-})
+}) 
 
 app.get('/login', function(req, res) {
   res.render('login')

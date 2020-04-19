@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const mysql = require('mysql')
 const bodyParser = require('body-parser')
-// router.set('trust proxy', 1);
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -74,12 +73,11 @@ router.post('/login', function(req, res) {
         if(err) throw err
         if(results.length == 1){
             let username = results[0].username
-            res.send(username)
-            req.session.username = "PROVAAA"
-
-            console.log(req.session.username)
+            req.session.username = username
+            req.session.save()
+            res.redirect('/');
         } else {
-            console.log("Credenziali errate")
+            console.log("Credenziali errate") 
             res.send("Credenziali errate")
         }
     })
