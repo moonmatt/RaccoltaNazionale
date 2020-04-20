@@ -14,6 +14,12 @@ sortFunction: function(a,b){
     var dateA = new Date(a.date).getTime();
     var dateB = new Date(b.date).getTime();
     return dateA > dateB ? 1 : -1;  
-  }
+  },
+
+between: function(min,max){
+  return Math.floor(
+    Math.random() * (max - min) + min
+  )
+}
 
 };

@@ -5,6 +5,7 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.post('/', (req, res) => {
+    if(req.session.username){
     var title = req.body.title
     var content = req.body.content
     var date = req.body.date
@@ -15,6 +16,9 @@ router.post('/', (req, res) => {
     } else {
         res.status(404)
         .send('Not found');
+    }
+    } else {
+        res.redirect('/login')
     }
 })
 module.exports = router

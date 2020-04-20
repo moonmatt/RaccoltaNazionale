@@ -56,12 +56,22 @@ async function rssReader(url){
 };
 app.use('/articles', articleRouter)
 app.use('/db', dbRouter)
-
+app.use('/public', express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
   if(req.session.username){
     postArr.sort(tools.sortFunction).reverse()
     res.render('index', {postArr: postArr})
+  } else {
+    res.redirect('/login')
+  }
+}) 
+
+app.get('/random', function (req, res) {
+  if(req.session.username){
+    let randNum = tools.between(0,postArr.length)
+    let post = postArr[randNum]
+    res.render('post', {title: post.title, content: post.content, date: post.date, image: post.image, journal: post.journal})
   } else {
     res.redirect('/login')
   }

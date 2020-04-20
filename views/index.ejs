@@ -4,51 +4,58 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	<link rel="stylesheet" href="public/css/style.css">
 	<title>Document</title>
 	<script
   src="https://code.jquery.com/jquery-3.5.0.min.js"
   integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
   crossorigin="anonymous"></script>
-<!-- cdnjs -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-lazyload-any/0.3.1/jquery.lazyload-any.min.js"></script>
+  <script src="public/js/functions.js"></script>
 </head>
 <body>
+
+<!-- As a heading -->
+<nav class="navbar navbar-success bg-success sticky-top py-2 d-block d-sm-block d-md-none text-center">
+	Raccolta Nazionale
+</nav>
+
 <div class="container">
 	<div class="row">
-		<div class="col-3">
-		<div class="sticky-top">
-			<button class="btn btn-success btn-block">Raccolta Nazionale</button>
-			<br>
-			<div class="jumbotron">ciaone</div>
+		<div class="col-3 d-none d-sm-none d-md-block">
+			<div class="sticky-top">
+				<br>
+			<button class="btn btn-success btn-block" onclick="goHome()">Raccolta Nazionale</button>
+			<a href="/info"><button class="btn btn-success btn-block mt-2">Informazioni</button></a>
+			<a href="/random"><button class="btn btn-success btn-block mt-2">Articolo Random</button></a>
+			<div class="jumbotron p-1 mt-2 pl-2">© 2020 Matteo Galavotti <br> I diritti degli articoli ai rispettivi proprietari</div>
 		</div>
 		</div>
-		<div class="col-9">
-	<h1>RaccoltaNazionale Node Edition</h1>
+		<div class="col">
 	<div id="list">
 	<% postArr.forEach(post => {%>
-	<div id="post">
+	<div id="post mt-2">
 		
 		<img src="<%= post.image %>" class="img-fluid" id="<%= encodeURIComponent(post.title) %>"> <br>
 		<b><%= post.title %></b> <br> <br>
 		<%= post.description %> <br> <br>
 		<b>Leggi tutto</b> - <%= post.journal %> - <%= post.date  %>  <br> <br>
-		<div class="row">
-			<div class="col-2">
-		<a href="<%= post.url %>"><button class="btn btn-success">Sul sito</button></a>
-			</div>
-		<% if(post.description != ""){ %>
-			<form action="/articles" method="POST">
-				<input type="hidden" name="title" value="<%= post.title %>">
-				<input type="hidden" name="content" value="<%= post.content %>">
-				<input type="hidden" name="date" value="<%= post.date %>">
-				<input type="hidden" name="image" value="<%= post.image %>">
-				<input type="hidden" name="journal" value="<%= post.journal %>">
-				<div class="col">
-				<input type="submit" name="send" value="Leggi qui" class="btn btn-success btn-block d-inline-block"> 
-			</div>
-			</form>
+			<% if(post.description != ""){ %>
+				<form action="/articles" method="POST">
+					<input type="hidden" name="title" value="<%= post.title %>">
+					<input type="hidden" name="content" value="<%= post.content %>">
+					<input type="hidden" name="date" value="<%= post.date %>">
+					<input type="hidden" name="image" value="<%= post.image %>">
+					<input type="hidden" name="journal" value="<%= post.journal %>">
+					<div class="row">
+					<div class="col pr-0">
+						<input type="submit" name="send" value="Leggi qui" class="btn btn-success btn-block"> 
+					</div>
+				</form>
+			<% } %> 
+		<div class="col-auto">
+			<a href="<%= post.url %>"><button class="btn btn-success d-inline-block float-right">Sul sito</button></a>
 		</div>
-		<% } %> 
 		<hr>
 	</div>
 	<% })%>
@@ -57,5 +64,14 @@
 </div>
 </div>
 </div>
+
+<!-- Navbar in basso -->
+<nav class="navbar navbar-success bg-success fixed-bottom p-0 m-0 d-block d-sm-block d-md-none">
+	<div class="row text-center">
+		<div class="col navigation-item py-3"><i class="fas fa-info-circle fa-lg"></i></div>
+		<div class="col navigation-item py-3" onclick="goHome()"><i class="fas fa-home fa-lg"></i></div>
+		<div class="col navigation-item py-3"><i class="fas fa-random fa-lg"></i></div>
+	</div>
+</nav>
 </body>
 </html>

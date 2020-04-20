@@ -1,0 +1,11 @@
+.navigation-item:not(:active) {
+    /* now keep red background for 1s */
+    transition: background-color 1s linear;
+}
+.navigation-item:active {
+    background-color: #16a085;
+}
+
+p {
+    overflow-wrap: break-word!important;
+}
