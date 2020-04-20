@@ -26,8 +26,8 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.laverita.info/feeds/feed.rss', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
-// let journals = ['https://www.ilgiornale.it/feed.xml']
+// let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.laverita.info/feeds/feed.rss', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
+let journals = ['https://www.ilgiornale.it/feed.xml']
 let postArr = [];
 
 journals.forEach(url => rssReader(url));
@@ -62,9 +62,7 @@ app.get('/', function (req, res) {
   if(req.session.username){
     postArr.sort(tools.sortFunction).reverse()
     res.render('index', {postArr: postArr})
-    console.log(postArr.length)
   } else {
-    console.log("NON SETTATA")
     res.redirect('/login')
   }
 }) 

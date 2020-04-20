@@ -10,8 +10,7 @@
   integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
   crossorigin="anonymous"></script>
 <!-- cdnjs -->
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-lazyload-any/0.3.1/jquery.lazyload-any.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -25,9 +24,10 @@
 		</div>
 		<div class="col-9">
 	<h1>RaccoltaNazionale Node Edition</h1>
-	<div class="infinite-scroll"></div>
+	<div id="list">
 	<% postArr.forEach(post => {%>
-		<div class="post">
+	<div id="post">
+		
 		<img src="<%= post.image %>" class="img-fluid" id="<%= encodeURIComponent(post.title) %>"> <br>
 		<b><%= post.title %></b> <br> <br>
 		<%= post.description %> <br> <br>
@@ -52,16 +52,10 @@
 		<hr>
 	</div>
 	<% })%>
-	<div id="marker"></div>
 </div>
 </div>
 </div>
 </div>
-<script>
-/* JS */
-$(function() {
-        $('.img-fluid').Lazy();
-    });
-</script>
+</div>
 </body>
 </html>
