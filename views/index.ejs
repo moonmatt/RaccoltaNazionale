@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	<link rel="stylesheet" href="public/css/style.css">
-	<title>Document</title>
+	<title>Raccolta Nazionale - Raccolta di Articoli</title>
 	<script
   src="https://code.jquery.com/jquery-3.5.0.min.js"
   integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
@@ -17,28 +17,30 @@
 
 <!-- As a heading -->
 <nav class="navbar navbar-success bg-success sticky-top py-2 d-block d-sm-block d-md-none text-center">
-	Raccolta Nazionale
+	Raccolta Nazionale <i class="fas fa-fire"></i>
 </nav>
 
-<div class="container">
+<div class="container" style="margin-bottom: 60px">
 	<div class="row">
 		<div class="col-3 d-none d-sm-none d-md-block">
 			<div class="sticky-top">
 				<br>
-			<button class="btn btn-success btn-block" onclick="goHome()">Raccolta Nazionale</button>
-			<a href="/info"><button class="btn btn-success btn-block mt-2">Informazioni</button></a>
-			<a href="/random"><button class="btn btn-success btn-block mt-2">Articolo Random</button></a>
-			<div class="jumbotron p-1 mt-2 pl-2">© 2020 Matteo Galavotti <br> I diritti degli articoli ai rispettivi proprietari</div>
+				<button class="btn btn-success btn-block" onclick="goHome()">Raccolta Nazionale  <i class="fas fa-fire"></i></button>
+				<button class="btn btn-success btn-block mt-2" onclick="redirect('/info')">Informazioni</button>
+				<button class="btn btn-success btn-block mt-2" onclick="redirect('/random')">Articolo Random</button>
+				<div class="jumbotron p-1 mt-2 pl-2">© 2020 Matteo Galavotti <br> I diritti degli articoli ai rispettivi proprietari</div>
+			</div>
 		</div>
-		</div>
-		<div class="col">
-	<div id="list">
+
+<div class="col">
 	<% postArr.forEach(post => {%>
-	<div id="post mt-2">
+	<div id="post mt-2 mb-2">
 		
-		<img src="<%= post.image %>" class="img-fluid" id="<%= encodeURIComponent(post.title) %>"> <br>
+		<img src="<%= post.image %>" class="img-fluid mt-3" id="<%= encodeURIComponent(post.title) %>"> <br>
 		<b><%= post.title %></b> <br> <br>
-		<%= post.description %> <br> <br>
+		<% if(post.description != ""){ %>
+			<%= post.description %> <br> <br>
+		<% } %> 
 		<b>Leggi tutto</b> - <%= post.journal %> - <%= post.date  %>  <br> <br>
 			<% if(post.description != ""){ %>
 				<form action="/articles" method="POST">
@@ -47,30 +49,45 @@
 					<input type="hidden" name="date" value="<%= post.date %>">
 					<input type="hidden" name="image" value="<%= post.image %>">
 					<input type="hidden" name="journal" value="<%= post.journal %>">
+					<input type="hidden" name="url" value="<%= post.url %>">
 					<div class="row">
 					<div class="col pr-0">
 						<input type="submit" name="send" value="Leggi qui" class="btn btn-success btn-block"> 
 					</div>
 				</form>
+			<% } else{ %> 
+				<div class="row">
+				<div class="col pr-0">
+					<button name="send" class="btn btn-success btn-block" disabled>Versione non disponibile</button>
+				</div>
 			<% } %> 
 		<div class="col-auto">
-			<a href="<%= post.url %>"><button class="btn btn-success d-inline-block float-right">Sul sito</button></a>
+			<div class="btn btn-success d-inline-block float-right" onclick="redirect(`<%= post.url %>`)">Sul sito</div>
 		</div>
 		<hr>
 	</div>
 	<% })%>
-</div>
-</div>
-</div>
-</div>
+					<!-- End Row (Buttons) -->
+					<!-- </div> -->
+
+<!-- End Post -->
+</div> 
+
+<!-- End col -->
 </div>
 
+<!-- End Row -->
+</div>
+
+<!-- End Container -->
+</div> 
+
 <!-- Navbar in basso -->
-<nav class="navbar navbar-success bg-success fixed-bottom p-0 m-0 d-block d-sm-block d-md-none">
+<nav class="navbar navbar-success bg-success fixed-bottom py-0 my-0 d-block d-sm-block d-md-none">
 	<div class="row text-center">
 		<div class="col navigation-item py-3"><i class="fas fa-info-circle fa-lg"></i></div>
 		<div class="col navigation-item py-3" onclick="goHome()"><i class="fas fa-home fa-lg"></i></div>
-		<div class="col navigation-item py-3"><i class="fas fa-random fa-lg"></i></div>
+		<div class="col navigation-item py-3" onclick="redirect('/random')"><i class="fas fa-random fa-lg"></i></div>
 	</div>
 </nav>
 </body>

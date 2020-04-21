@@ -26,8 +26,8 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-// let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.laverita.info/feeds/feed.rss', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
-let journals = ['https://www.ilgiornale.it/feed.xml']
+let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.laverita.info/feeds/feed.rss', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
+// let journals = ['https://www.ilgiornale.it/feed.xml']
 let postArr = [];
 
 journals.forEach(url => rssReader(url));
@@ -56,7 +56,7 @@ async function rssReader(url){
 };
 app.use('/articles', articleRouter)
 app.use('/db', dbRouter)
-app.use('/public', express.static(__dirname + '/public'));
+app.use('/public', express.static(__dirname + '/public')); 
 
 app.get('/', function (req, res) {
   if(req.session.username){
@@ -71,7 +71,7 @@ app.get('/random', function (req, res) {
   if(req.session.username){
     let randNum = tools.between(0,postArr.length)
     let post = postArr[randNum]
-    res.render('post', {title: post.title, content: post.content, date: post.date, image: post.image, journal: post.journal})
+    res.render('post', {title: post.title, content: post.content, date: post.date, image: post.image, journal: post.journal, url: post.url})
   } else {
     res.redirect('/login')
   }

@@ -1,11 +1,15 @@
 .navigation-item:not(:active) {
     /* now keep red background for 1s */
-    transition: background-color 1s linear;
+    transition: background-color 0.5s linear;
 }
 .navigation-item:active {
     background-color: #16a085;
 }
 
-p {
+#post {
     overflow-wrap: break-word!important;
+}
+img {
+    width: 100%;
+    height: auto;
 }

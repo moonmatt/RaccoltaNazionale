@@ -11,8 +11,9 @@ router.post('/', (req, res) => {
     var date = req.body.date
     var image = req.body.image
     var journal = req.body.journal
+    var url = req.body.url
     if(title != ""){
-        res.render('post', {title: title, content: content, date: date, image: image, journal: journal})
+        res.render('post', {title: title, content: content, date: date, image: image, journal: journal, url: url})
     } else {
         res.status(404)
         .send('Not found');
