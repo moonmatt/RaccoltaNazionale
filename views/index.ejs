@@ -1,3 +1,9 @@
+<!-- <div class="preloader"></div> -->
+<script>
+	window.onload = function () {
+	  console.log('Loaded');
+	}
+  </script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +13,17 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	<link rel="stylesheet" href="public/css/style.css">
 	<title>Raccolta Nazionale - Raccolta di Articoli</title>
-	<script
-  src="https://code.jquery.com/jquery-3.5.0.min.js"
-  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
-  crossorigin="anonymous"></script>
-  <script src="public/js/functions.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="public/js/functions.js"></script>
 </head>
 <body>
+
+	<div class="preloader-wrapper">
+		<div class="preloader">
+			<h1>Raccolta Nazionale </h1>
+		</div>
+		<div class="credits p-2">Coded by Matteo Galavotti</div>
+	</div>
 
 <!-- As a heading -->
 <nav class="navbar navbar-success bg-success sticky-top py-2 d-block d-sm-block d-md-none text-center">
@@ -29,17 +39,17 @@
 				<button class="btn btn-success btn-block mt-2" onclick="redirect('/info')">Informazioni</button>
 				<button class="btn btn-success btn-block mt-2" onclick="redirect('/random')">Articolo Random</button>
 				<div class="jumbotron p-1 mt-2 pl-2">© 2020 Matteo Galavotti <br> I diritti degli articoli ai rispettivi proprietari</div>
+				<div class="jumbotron p-1 mt-2 pl-2">Closed Beta | Vi chiedo di non diffondere le credenziali, grazie.</div>
 			</div>
 		</div>
 
 <div class="col">
 	<% postArr.forEach(post => {%>
 	<div id="post mt-2 mb-2">
-		
-		<img src="<%= post.image %>" class="img-fluid mt-3" id="<%= encodeURIComponent(post.title) %>"> <br>
+		<img src="<%= post.image %>" class="img-fluid mt-3" id="<%= encodeURIComponent(post.title) %>" alt="" onerror="this.style.display='none'"> <br>
 		<b><%= post.title %></b> <br> <br>
 		<% if(post.description != ""){ %>
-			<%= post.description %> <br> <br>
+			<%= post.description %>... <br> <br>
 		<% } %> 
 		<b>Leggi tutto</b> - <%= post.journal %> - <%= post.date  %>  <br> <br>
 			<% if(post.description != ""){ %>
@@ -66,12 +76,12 @@
 		</div>
 		<hr>
 	</div>
+	<!-- End Post -->
+
+</div> 
 	<% })%>
 					<!-- End Row (Buttons) -->
 					<!-- </div> -->
-
-<!-- End Post -->
-</div> 
 
 <!-- End col -->
 </div>
@@ -85,7 +95,7 @@
 <!-- Navbar in basso -->
 <nav class="navbar navbar-success bg-success fixed-bottom py-0 my-0 d-block d-sm-block d-md-none">
 	<div class="row text-center">
-		<div class="col navigation-item py-3"><i class="fas fa-info-circle fa-lg"></i></div>
+		<div class="col navigation-item py-3" onclick="redirect('/info')"><i class="fas fa-info-circle fa-lg"></i></div>
 		<div class="col navigation-item py-3" onclick="goHome()"><i class="fas fa-home fa-lg"></i></div>
 		<div class="col navigation-item py-3" onclick="redirect('/random')"><i class="fas fa-random fa-lg"></i></div>
 	</div>

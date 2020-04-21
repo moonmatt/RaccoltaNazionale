@@ -26,7 +26,7 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.laverita.info/feeds/feed.rss', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
+let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
 // let journals = ['https://www.ilgiornale.it/feed.xml']
 let postArr = [];
 
@@ -71,15 +71,40 @@ app.get('/random', function (req, res) {
   if(req.session.username){
     let randNum = tools.between(0,postArr.length)
     let post = postArr[randNum]
-    res.render('post', {title: post.title, content: post.content, date: post.date, image: post.image, journal: post.journal, url: post.url})
+    if(post.content != ""){
+      res.render('post', {title: post.title, content: post.content, date: post.date, image: post.image, journal: post.journal, url: post.url})
+    } else {
+      res.redirect('/random')
+    }
   } else {
     res.redirect('/login')
   }
 }) 
 
 app.get('/login', function(req, res) {
-  res.render('login')
+  if(req.session.username){
+    res.redirect('/')
+  } else {
+    res.render('login')
+  }
 })
+app.get('/logout', function(req, res) {
+  if(req.session.username){
+    req.session.destroy();
+    res.redirect('/login')
+  } else {
+    res.redirect('/login')
+  }
+})
+
+app.get('/info', function(req, res) {
+  if(req.session.username){
+    res.render('info')
+  } else {
+    res.redirect('/login')
+  }
+})
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })

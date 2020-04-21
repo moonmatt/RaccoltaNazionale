@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	<link rel="stylesheet" href="public/css/style.css">
+	<title>Raccolta Nazionale - Raccolta di Articoli</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="public/js/functions.js"></script>
+</head>
+<body>
+
+	<div class="preloader-wrapper">
+		<div class="preloader">
+			<h1>Raccolta Nazionale </h1>
+		</div>
+		<div class="credits p-2">Coded by Matteo Galavotti</div>
+	</div>
+
+<!-- As a heading -->
+<nav class="navbar navbar-success bg-success sticky-top py-2 d-block d-sm-block d-md-none text-center">
+	Raccolta Nazionale <i class="fas fa-fire"></i>
+</nav>
+
+<div class="container" style="margin-bottom: 60px">
+	<div class="row">
+		<div class="col-3 d-none d-sm-none d-md-block">
+			<div class="sticky-top">
+				<br>
+				<button class="btn btn-success btn-block" onclick="redirect('/')">Raccolta Nazionale  <i class="fas fa-fire"></i></button>
+				<button class="btn btn-success btn-block mt-2" onclick="redirect('/info')">Informazioni</button>
+				<button class="btn btn-success btn-block mt-2" onclick="redirect('/random')">Articolo Random</button>
+				<div class="jumbotron p-1 mt-2 pl-2">© 2020 Matteo Galavotti <br> I diritti degli articoli ai rispettivi proprietari</div>
+				<div class="jumbotron p-1 mt-2 pl-2">Closed Beta | Vi chiedo gentilmente di non diffondere le credenziali, grazie.</div>
+			</div>
+		</div>
+
+<div class="col mt-2">
+	<div id="post mt-2 mb-2">
+		<h1>Informazioni</h1>
+		<p>Raccolta Nazionale è un sito web che raccoglie articoli in tempo reale da vari giornali e riviste online. Attualmente i siti supportati sono i seguenti: 
+			<ul>
+				<li>Il Giornale</li>
+				<li>Libero Quotidiano</li>
+				<li>Il Primato Nazionale</li>
+				<li>Il Tempo</li>
+				<li>Il Foglio</li>
+				<li>Se vuoi aggiungere/rimuovere una fonte contattami su Telegram (@moonmatt)</li>
+			  </ul>
+
+			  <h4>Come funziona?</h4>
+			  Ogni giornale rilascia un documento RSS, che è accessibile da tutti. Questo sistema prende gli articoli, li ordina per data (dal più recente al più vecchio) e li inserisce nella Home Page. <br>
+			  I contenuti sono visualizzabili sia internamente a Raccolta Nazionale che sul sito originale. Alcuni post non sono esposti poichè contengono contenuti media come video.
+			  
+			  <h4 class="mt-1">Codice</h4>
+			  L'intero ecosistema di Raccolta Nazionale è libero e accessibile su <a href="https://github.com/moonmatt/RaccoltaNazionale">GitHub</a>, è scritto in JavaScript tramite Express. <br>
+			  Se trovate un bug o pensate di aver in mente una funzionalità da aggiungere, non esitate a contattarmi su Telegram, (@moonmatt)
+			  
+			  <h4 class="mt-1">Chi sono io?</h4>
+			  Ciao! Io sono Matteo Galavotti, ho 14 e nel tempo libero programmo e sviluppo siti web. Ho iniziato questo progetto il 14 Aprile 2020 principalmente per permettere alla comunità di Instagram (e non solo) sovranista di avere un punto d'informazione unico e veloce. <br>
+			  Il mio sito web è <a href="https://moonmatt.cf">moonmatt.cf</a> <br> <br>
+
+			  Il sito web è interamente programmato e Hostato in Italia
+			</p>
+<!-- End Post -->
+</div> 
+
+<!-- End col -->
+</div>
+
+<!-- End Row -->
+</div>
+
+<!-- End Container -->
+</div> 
+
+<!-- Navbar in basso -->
+<nav class="navbar navbar-success bg-success fixed-bottom py-0 my-0 d-block d-sm-block d-md-none">
+	<div class="row text-center">
+		<div class="col navigation-item py-3" onclick="redirect('/info')"><i class="fas fa-info-circle fa-lg"></i></div>
+		<div class="col navigation-item py-3" onclick="redirect('/')"><i class="fas fa-home fa-lg"></i></div>
+		<div class="col navigation-item py-3" onclick="redirect('/random')"><i class="fas fa-random fa-lg"></i></div>
+	</div>
+</nav>
+</body>
+</html>
