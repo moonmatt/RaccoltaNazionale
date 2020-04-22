@@ -2,19 +2,21 @@ const express = require('express')
 const app = express()
 const articleRouter = require('./routes/articles')
 const dbRouter = require('./routes/db')
-const Parser = require('rss-parser')
 const tools = require('./tools')
-const moment = require('moment')
 const session = require('express-session')
-const uuid      = require("uuid");
-const helmet    = require("helmet");
 const cookiep   = require("cookie-parser");
+const {performance} = require('perf_hooks');
+const fs = require('fs');
+var cron = require('node-cron')
+const Parser = require('rss-parser')
+const moment = require('moment')
 const parser = new Parser({
     customFields: {
     item: ['description'],
     test: ['enclosure']
   }
 })
+
 app.set('view engine', 'ejs')
 app.use(cookiep());
 app.set('trust proxy', 1);
@@ -26,15 +28,23 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
-// let journals = ['https://www.ilgiornale.it/feed.xml']
+// Qui parso i file e li mando
 
-async function rssReader(){
+let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
+
+async function getRss(){
     let postArr = [];
       for(let url of journals){
+        p0 = performance.now();
         let feed = await parser.parseURL(url);
-    
+        p1 = performance.now();
+        console.log("Pars:  " + (p1 - p0) + " milliseconds.")
+        // let i = 0;
         for(let item of feed.items){
+        //   if(i >= 50){
+        //     break;
+        //   }
+        //   i++
           try{
             image = item.enclosure.url
           } catch(err){
@@ -53,8 +63,28 @@ async function rssReader(){
         }
   };
   postArr.sort(tools.sortFunction).reverse()
-  return postArr
+  // postArr = postArr.slice(0, 50);
+//   console.log(JSON.stringify(postArr))
+
+fs.writeFile('public/data.json', JSON.stringify(postArr), (err) => {
+    if (err) throw err;
+    console.log('Data written to file');
+});
 };
+
+
+cron.schedule('*/2 * * * *', () => {
+  getRss();
+  console.log("Get new posts")
+});
+
+async function rssReader() {
+  let rawdata = await fs.readFileSync('public/data.json');
+  let posts = await JSON.parse(rawdata);
+  return posts
+
+}
+
 app.use('/articles', articleRouter)
 app.use('/db', dbRouter)
 app.use('/public', express.static(__dirname + '/public')); 
