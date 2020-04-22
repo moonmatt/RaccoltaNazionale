@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+	<link rel="stylesheet" href="public/css/dark.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	<link rel="stylesheet" href="public/css/style.css">
 	<title><%= title %> - Raccolta Nazionale</title>
@@ -38,11 +38,12 @@
 			</div>
 		</div>
 
-<div class="col">
+		<div class="col col-lg-9 col-xl-9 col-md-9">
 	<div id="post mt-2" style="overflow-wrap: break-word!important;">
-		<img src="<%= image  %> " alt="" class="mt-2"> <br>
-		<h3><%= title %> </h3> <hr> <br>
-		<p id="content" class="lead"><%- content %></p> <br> <hr>
+		<img src="<%= image  %> " alt="" class="mt-2 mb-2"> <br>
+		<h3><%= title %> </h3> <br>
+		<p id="content" class="lead"><%- content %></p>
+		<hr>
 		<p><%= journal %> - <%= date %> </p>
 	</div> 
 

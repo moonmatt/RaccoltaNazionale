@@ -1,15 +1,9 @@
-<!-- <div class="preloader"></div> -->
-<script>
-	window.onload = function () {
-	  console.log('Loaded');
-	}
-  </script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+	<link rel="stylesheet" href="public/css/dark.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	<link rel="stylesheet" href="public/css/style.css">
 	<title>Raccolta Nazionale - Raccolta di Articoli</title>
@@ -30,7 +24,7 @@
 	Raccolta Nazionale <i class="fas fa-fire"></i>
 </nav>
 
-<div class="container" style="margin-bottom: 60px">
+<div class="container " style="margin-bottom: 60px">
 	<div class="row">
 		<div class="col-3 d-none d-sm-none d-md-block">
 			<div class="sticky-top">
@@ -43,11 +37,13 @@
 			</div>
 		</div>
 
-<div class="col col-lg-8 col-xl-8 col-md-8">
+<div class="col col-lg-9 col-xl-9 col-md-9">
+	<br>
 	<% postArr.forEach(post => {%>
 	<div id="post mt-2 mb-2">
-		<img src="<%= post.image %>" class="img-fluid mt-3" id="<%= encodeURIComponent(post.title) %>" alt="" onerror="this.style.display='none'"> <br>
-		<b><%= post.title %></b> <br> <br>
+
+		<img src="<%= post.image %>" class="img-fluid mt-3 mb-2" id="<%= encodeURIComponent(post.title) %>" alt="" onerror="this.style.display='none'">
+		<h4 class="font-weight-bold"><%= post.title %></h4>
 		<% if(post.description != ""){ %>
 			<%= post.description %>... <br> <br>
 		<% } %> 
@@ -74,10 +70,9 @@
 		<div class="col-auto">
 			<div class="btn btn-success d-inline-block float-right" onclick="redirect(`<%= post.url %>`)">Sul sito</div>
 		</div>
-		<hr>
 	</div>
 	<!-- End Post -->
-
+	<hr class="mt-3">
 </div> 
 	<% })%>
 					<!-- End Row (Buttons) -->
