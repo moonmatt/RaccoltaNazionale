@@ -43,7 +43,7 @@
 			</div>
 		</div>
 
-<div class="col">
+<div class="col col-lg-8 col-xl-8 col-md-8">
 	<% postArr.forEach(post => {%>
 	<div id="post mt-2 mb-2">
 		<img src="<%= post.image %>" class="img-fluid mt-3" id="<%= encodeURIComponent(post.title) %>" alt="" onerror="this.style.display='none'"> <br>
@@ -68,7 +68,7 @@
 			<% } else{ %> 
 				<div class="row">
 				<div class="col pr-0">
-					<button name="send" class="btn btn-success btn-block" disabled>Versione non disponibile</button>
+					<button name="send" class="btn btn-success btn-block" disabled>Articolo non disponibile</button>
 				</div>
 			<% } %> 
 		<div class="col-auto">
