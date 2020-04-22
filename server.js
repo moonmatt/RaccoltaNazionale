@@ -28,40 +28,43 @@ app.use(session({
 
 let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
 // let journals = ['https://www.ilgiornale.it/feed.xml']
-let postArr = [];
 
-journals.forEach(url => rssReader(url));
-async function rssReader(url){
- 
-  let feed = await parser.parseURL(url);
- 
-  feed.items.forEach(item => {
-    try{
-      image = item.enclosure.url
-    } catch(err){
-      image = null
-    }
-    post = {
-      title: item.title,
-      url: item.link, 
-      date: moment(item.pubDate).locale("it").format('LLLL'),
-      content: item.description, 
-      description: tools.escapeHtml(item.description).substring(0,200),
-      journal: feed.title,
-      image: image
-    }
-    postArr.push(post)
-  });
- 
+async function rssReader(){
+    let postArr = [];
+      for(let url of journals){
+        let feed = await parser.parseURL(url);
+    
+        for(let item of feed.items){
+          try{
+            image = item.enclosure.url
+          } catch(err){
+            image = null
+          }
+          post = {
+            title: item.title,
+            url: item.link, 
+            date: moment(item.pubDate).locale("it").format('LLLL'),
+            content: item.description, 
+            description: tools.escapeHtml(item.description).substring(0,200),
+            journal: feed.title,
+            image: image
+          }
+          postArr.push(post)
+        }
+  };
+  postArr.sort(tools.sortFunction).reverse()
+  return postArr
 };
 app.use('/articles', articleRouter)
 app.use('/db', dbRouter)
 app.use('/public', express.static(__dirname + '/public')); 
 
-app.get('/', function (req, res) {
+// INDEX LOAD POSTS
+
+app.get('/', async function (req, res) {
   if(req.session.username){
-    postArr.sort(tools.sortFunction).reverse()
-    res.render('index', {postArr: postArr})
+    let finalArr = await rssReader()
+    res.render('index', {postArr: finalArr})
   } else {
     res.redirect('/login')
   }
