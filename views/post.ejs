@@ -38,9 +38,11 @@
 			</div>
 		</div>
 
-		<div class="col col-lg-9 col-xl-9 col-md-9">
+		<div class="col col-lg-9 col-xl-9 col-md-9 mt-3">
 	<div id="post mt-2" style="overflow-wrap: break-word!important;">
+		<% if(journal != "RaccoltaNazionale") {%>
 		<img src="<%= image  %> " alt="" class="mt-2 mb-2"> <br>
+		<%>%>
 		<h3><%= title %> </h3> <br>
 		<p id="content" class="lead"><%- content %></p>
 		<hr>

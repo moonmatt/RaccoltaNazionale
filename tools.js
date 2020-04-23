@@ -20,6 +20,24 @@ between: function(min,max){
   return Math.floor(
     Math.random() * (max - min) + min
   )
+},
+
+getImg: function(str){
+  var imgExists = str.indexOf('<img src="');
+
+if (imgExists > -1) {
+    var i = imgExists + 10;
+    
+    str = str.substr(i);
+    str = str.substr(0, str.indexOf('"'));
+    if(str != ""){
+      return str;
+    } else {
+      return null;
+    }
 }
+}
+
+
 
 };

@@ -10,6 +10,7 @@ const fs = require('fs');
 var cron = require('node-cron')
 const Parser = require('rss-parser')
 const moment = require('moment')
+
 const parser = new Parser({
     customFields: {
     item: ['description'],
@@ -30,15 +31,12 @@ app.use(session({
 
 // Qui parso i file e li mando
 
-let journals = ['https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
+let journals = ['https://rss.app/feeds/ib0YJTMgPlta9ssZ.xml', 'https://www.ilgiornale.it/feed.xml', 'https://www.liberoquotidiano.it/rss.xml', 'https://www.ilprimatonazionale.it/feed/', 'https://www.iltempo.it/rss.jsp?sezione=200', 'https://www.ilfoglio.it/rss.jsp?sezione=121']
 
 async function getRss(){
     let postArr = [];
       for(let url of journals){
-        p0 = performance.now();
         let feed = await parser.parseURL(url);
-        p1 = performance.now();
-        console.log("Pars:  " + (p1 - p0) + " milliseconds.")
         // let i = 0;
         for(let item of feed.items){
         //   if(i >= 50){
@@ -48,7 +46,7 @@ async function getRss(){
           try{
             image = item.enclosure.url
           } catch(err){
-            image = null
+            image = tools.getImg(item.description)
           }
           post = {
             title: item.title,
@@ -63,8 +61,6 @@ async function getRss(){
         }
   };
   postArr.sort(tools.sortFunction).reverse()
-  // postArr = postArr.slice(0, 50);
-//   console.log(JSON.stringify(postArr))
 
 fs.writeFile('public/data.json', JSON.stringify(postArr), (err) => {
     if (err) throw err;
@@ -75,7 +71,7 @@ fs.writeFile('public/data.json', JSON.stringify(postArr), (err) => {
 
 cron.schedule('*/2 * * * *', () => {
   getRss();
-  console.log("Get new posts")
+  console.log("Get new posts") 
 });
 
 async function rssReader() {
@@ -93,17 +89,21 @@ app.use('/public', express.static(__dirname + '/public'));
 
 app.get('/', async function (req, res) {
   if(req.session.username){
+    t0 = performance.now();
     let finalArr = await rssReader()
+    t1 = performance.now();
+    console.log("Array:  " + (t1 - t0) + " milliseconds.")
     res.render('index', {postArr: finalArr})
   } else {
     res.redirect('/login')
   }
 }) 
 
-app.get('/random', function (req, res) {
+app.get('/random', async function (req, res) {
   if(req.session.username){
-    let randNum = tools.between(0,postArr.length)
-    let post = postArr[randNum]
+    let finalArr = await rssReader()
+    let randNum = tools.between(0,finalArr.length)
+    let post = finalArr[randNum]
     if(post.content != ""){
       res.render('post', {title: post.title, content: post.content, date: post.date, image: post.image, journal: post.journal, url: post.url})
     } else {

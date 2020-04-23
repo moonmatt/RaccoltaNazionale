@@ -41,7 +41,7 @@
 	<br>
 	<% postArr.forEach(post => {%>
 	<div id="post mt-2 mb-2">
-
+		<img src="<%= post.imgTest %>" alt="">
 		<img src="<%= post.image %>" class="img-fluid mt-3 mb-2" id="<%= encodeURIComponent(post.title) %>" alt="" onerror="this.style.display='none'">
 		<h4 class="font-weight-bold"><%= post.title %></h4>
 		<% if(post.description != ""){ %>
