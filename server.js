@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const articleRouter = require('./routes/articles')
-const dbRouter = require('./routes/db')
+//const dbRouter = require('./routes/db')
 const tools = require('./tools')
 const session = require('express-session')
 const cookiep   = require("cookie-parser");
@@ -48,14 +48,19 @@ async function getRss(){
           } catch(err){
             image = tools.getImg(item.description)
           }
+          let content = await tools.escapeContent(item.content);
           post = {
             title: item.title,
             url: item.link, 
             date: moment(item.pubDate).locale("it").format('LLLL'),
-            content: item.description, 
+            content: content,
             description: tools.escapeHtml(item.description).substring(0,200),
             journal: feed.title,
-            image: image
+            image: image,
+            thumbnail: image
+          }
+          if(post.content.includes(image)){
+            post.thumbnail = null
           }
           postArr.push(post)
         }
@@ -66,6 +71,12 @@ fs.writeFile('public/data.json', JSON.stringify(postArr), (err) => {
     if (err) throw err;
     console.log('Data written to file');
 });
+
+fs.writeFile('public/update.json', JSON.stringify(moment().format('H:mm:ss')), (err) => {
+  if (err) throw err;
+  console.log('Time updated');
+});
+
 };
 
 
@@ -81,61 +92,56 @@ async function rssReader() {
 
 }
 
+async function timeReader() {
+  let rawdata = await fs.readFileSync('public/update.json');
+  let time = await JSON.parse(rawdata);
+  return time
+}
+
 app.use('/articles', articleRouter)
-app.use('/db', dbRouter)
+//app.use('/db', dbRouter)
 app.use('/public', express.static(__dirname + '/public')); 
 
 // INDEX LOAD POSTS
 
 app.get('/', async function (req, res) {
-  if(req.session.username){
     t0 = performance.now();
     let finalArr = await rssReader()
+    let timeUpdate = await timeReader()
     t1 = performance.now();
     console.log("Array:  " + (t1 - t0) + " milliseconds.")
-    res.render('index', {postArr: finalArr})
-  } else {
-    res.redirect('/login')
-  }
+    res.render('index', {postArr: finalArr, timeUpdate: timeUpdate})
 }) 
 
 app.get('/random', async function (req, res) {
-  if(req.session.username){
     let finalArr = await rssReader()
     let randNum = tools.between(0,finalArr.length)
     let post = finalArr[randNum]
     if(post.content != ""){
-      res.render('post', {title: post.title, content: post.content, date: post.date, image: post.image, journal: post.journal, url: post.url})
+      res.render('post', {title: post.title, content: post.content, date: post.date, image: post.image, journal: post.journal, url: post.url, thumbnail: post.thumbnail})
     } else {
       res.redirect('/random')
     }
-  } else {
-    res.redirect('/login')
-  }
 }) 
 
-app.get('/login', function(req, res) {
-  if(req.session.username){
-    res.redirect('/')
-  } else {
-    res.render('login')
-  }
-})
-app.get('/logout', function(req, res) {
-  if(req.session.username){
-    req.session.destroy();
-    res.redirect('/login')
-  } else {
-    res.redirect('/login')
-  }
-})
+//app.get('/login', function(req, res) {
+//  if(req.session.username){
+//    res.redirect('/')
+//  } else {
+//    res.render('login')
+//  }
+//})
+//app.get('/logout', function(req, res) {
+//  if(req.session.username){
+//    req.session.destroy();
+//    res.redirect('/login')
+//  } else {
+//    res.redirect('/login')
+//  }
+//})
 
 app.get('/info', function(req, res) {
-  if(req.session.username){
     res.render('info')
-  } else {
-    res.redirect('/login')
-  }
 })
 
 app.listen(3000, function () {

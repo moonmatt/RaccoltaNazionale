@@ -1,11 +1,9 @@
-	</html>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="public/css/dark.css">
+	<link id="pagestyle" rel="stylesheet" href="public/css/dark-green.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	<link rel="stylesheet" href="public/css/style.css">
 	<title><%= title %> - Raccolta Nazionale</title>
@@ -14,16 +12,26 @@
 </head>
 <body>
 
-	<div class="preloader-wrapper">
+	<div class="preloader-wrapper" id="preloader-show">
 		<div class="preloader">
 			<h1>Raccolta Nazionale </h1>
 		</div>
 		<div class="credits p-2">Coded by Matteo Galavotti</div>
 	</div>
 
-<!-- As a heading -->
+<!-- Navbar Mobile -->
 <nav class="navbar navbar-success bg-success sticky-top py-2 d-block d-sm-block d-md-none text-center">
-	Raccolta Nazionale <i class="fas fa-fire"></i>
+	<div class="row">
+		<div class="col my-auto"><div class="menuTitle">Raccolta Nazionale <i class="fas fa-fire"></i></div></div>
+		<div class="col">
+			<select name="changeThemeSelect" id="changeThemeSelect" onchange="updateTheme()" class="form-control">
+				<option value="dark-green">Scuro-verde</option>	
+				<option value="dark-blue">Scuro-blu</option>
+				<option value="light-blue">Chiaro-blu</option>		
+				<option value="light-green">Chiaro-verde</option>	
+			</select>
+		</div>
+	</div>
 </nav>
 
 <div class="container" style="margin-bottom: 60px">
@@ -40,11 +48,11 @@
 
 		<div class="col col-lg-9 col-xl-9 col-md-9 mt-3">
 	<div id="post mt-2" style="overflow-wrap: break-word!important;">
-		<% if(journal != "RaccoltaNazionale") {%>
+		<% if(journal != "Raccolta Nazionale (@raccolta.nazionale) • Instagram photos and videos") {%>
 		<img src="<%= image  %> " alt="" class="mt-2 mb-2"> <br>
-		<%>%>
+		<%}%>
 		<h3><%= title %> </h3> <br>
-		<p id="content" class="lead"><%- content %></p>
+		<p id="content" class="lead" style="white-space: pre-line"><%- content %></p>
 		<hr>
 		<p><%= journal %> - <%= date %> </p>
 	</div> 
@@ -60,11 +68,14 @@
 
 <!-- Navbar in basso -->
 <nav class="navbar navbar-success bg-success fixed-bottom py-0 my-0 d-block d-sm-block d-md-none">
-	<div class="row text-center">
-		<div class="col navigation-item py-3" onclick="redirect(`<%= url %>`)"><i class="fas fa-link fa-lg"></i></div>
-		<div class="col navigation-item py-3" onclick="redirectHome(`<%= encodeURIComponent(title) %>`)"><i class="fas fa-home fa-lg"></i></div>
+	<div class="row text-center bottomNavbar">
+		<div class="col navigation-item py-3" onclick="redirect('/info')"><i class="fas fa-info-circle fa-lg"></i></div>
+		<div class="col navigation-item py-3" onclick="redirect('/')"><i class="fas fa-home fa-lg"></i></div>
 		<div class="col navigation-item py-3" onclick="redirect('/random')"><i class="fas fa-random fa-lg"></i></div>
 	</div>
 </nav>
+<script>
+load();
+</script>
 </body>
 </html>

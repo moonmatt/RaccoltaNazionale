@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-164229329-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-164229329-1');
+</script>
+
+
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link id="pagestyle" rel="stylesheet" href="public/css/dark.css">
+	<link id="pagestyle" rel="stylesheet" href="public/css/dark-green.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	<link rel="stylesheet" href="public/css/style.css">
 	<title>Raccolta Nazionale - Raccolta di Articoli</title>
@@ -12,16 +24,26 @@
 </head>
 <body>
 
-	<div class="preloader-wrapper">
+	<div class="preloader-wrapper" id="preloader-show">
 		<div class="preloader">
 			<h1>Raccolta Nazionale </h1>
 		</div>
 		<div class="credits p-2">Coded by Matteo Galavotti</div>
 	</div>
 
-<!-- As a heading -->
+<!-- Navbar Mobile -->
 <nav class="navbar navbar-success bg-success sticky-top py-2 d-block d-sm-block d-md-none text-center">
-	Raccolta Nazionale <i class="fas fa-fire"></i>
+	<div class="row">
+		<div class="col my-auto"><div class="menuTitle">Raccolta Nazionale <i class="fas fa-fire"></i></div></div>
+		<div class="col">
+			<select name="changeThemeSelect" id="changeThemeSelect" onchange="updateTheme()" class="form-control">
+				<option value="dark-green">Scuro-verde</option>	
+				<option value="dark-blue">Scuro-blu</option>
+				<option value="light-blue">Chiaro-blu</option>		
+				<option value="light-green">Chiaro-verde</option>	
+			</select>
+		</div>
+	</div>
 </nav>
 
 <div class="container" style="margin-bottom: 60px">
@@ -33,11 +55,10 @@
 				<button class="btn btn-success btn-block mt-2" onclick="redirect('/info')">Informazioni</button>
 				<button class="btn btn-success btn-block mt-2" onclick="redirect('/random')">Articolo Random</button>
 				<div class="jumbotron p-1 mt-2 pl-2">© 2020 Matteo Galavotti <br> I diritti degli articoli ai rispettivi proprietari</div>
-				<div class="jumbotron p-1 mt-2 pl-2">Closed Beta | Vi chiedo gentilmente di non diffondere le credenziali, grazie.</div>
 			</div>
 		</div>
 
-<div class="col mt-2">
+<div class="col col-lg-8 col-xl-8 col-md-8 mt-2">
 	<div id="post mt-2 mb-2">
 		<h1>Informazioni</h1>
 		<p>Raccolta Nazionale è un sito web che raccoglie articoli in tempo reale da vari giornali e riviste online. Attualmente i siti supportati sono i seguenti: 
@@ -78,11 +99,15 @@
 
 <!-- Navbar in basso -->
 <nav class="navbar navbar-success bg-success fixed-bottom py-0 my-0 d-block d-sm-block d-md-none">
-	<div class="row text-center">
+	<div class="row text-center bottomNavbar">
 		<div class="col navigation-item py-3" onclick="redirect('/info')"><i class="fas fa-info-circle fa-lg"></i></div>
 		<div class="col navigation-item py-3" onclick="redirect('/')"><i class="fas fa-home fa-lg"></i></div>
 		<div class="col navigation-item py-3" onclick="redirect('/random')"><i class="fas fa-random fa-lg"></i></div>
 	</div>
 </nav>
+
+<script>
+load();
+</script>
 </body>
 </html>
