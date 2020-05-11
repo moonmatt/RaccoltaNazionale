@@ -20,30 +20,38 @@ function redirectHome(url){
 
 // THEME
 
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
 function swapStyleSheet(sheet){
     document.getElementById('pagestyle').setAttribute('href', '/public/css/' + sheet);
 }   
 function load() {
     var themeSwitcher = document.getElementById("changeThemeSelect");
-    let theme = document.cookie.trim();
+    let theme = getCookie("theme");
     console.log(theme)
     if(theme == "dark-green"){
         swapStyleSheet('dark-green.css')
-        themeSwitcher.selectedIndex = 1
+        themeSwitcher.selectedIndex = 0
     } else if(theme == "dark-blue"){
         swapStyleSheet('dark-blue.css')
-        themeSwitcher.selectedIndex = 0
+        themeSwitcher.selectedIndex = 1
     } else if(theme == "light-green"){
         swapStyleSheet('light-green.css')
         themeSwitcher.selectedIndex = 3
     } else if(theme == "light-blue"){
         swapStyleSheet('light-blue.css')
         themeSwitcher.selectedIndex = 2
+    } else {
+        swapStyleSheet('dark-green.css')
     }
 }
 function save() {
     var themeLoaded = document.getElementById("changeThemeSelect").value;
-    document.cookie = themeLoaded;
+    document.cookie = `theme=${themeLoaded}`;
 }
 function updateTheme() {
     var options = document.getElementById("changeThemeSelect").value;

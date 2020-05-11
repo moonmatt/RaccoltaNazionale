@@ -1,2 +1,4 @@
 # RaccoltaNazionaleNode
-reader rrs di vari giornali web
+https://raccoltanazionale.cf
+
+Rss reader of Journals

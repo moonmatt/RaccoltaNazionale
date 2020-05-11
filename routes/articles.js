@@ -2,7 +2,9 @@ const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 router.post('/', (req, res) => {
     var title = req.body.title
@@ -12,11 +14,21 @@ router.post('/', (req, res) => {
     var thumbnail = req.body.thumbnail
     var journal = req.body.journal
     var url = req.body.url
-    if(title != ""){
-        res.render('post', {title: title, content: content, date: date, image: image, journal: journal, url: url, thumbnail: thumbnail})
+    var id = req.body.id
+    if (title != "") {
+        res.render('post', {
+            title: title,
+            content: content,
+            date: date,
+            image: image,
+            journal: journal,
+            url: url,
+            thumbnail: thumbnail,
+            id: id
+        })
     } else {
         res.status(404)
-        .send('Not found');
+            .send('Not found');
     }
 })
 
