@@ -17,7 +17,7 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
     "helmet": "^3.22.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mysql": "^2.18.1",
     "node-cron": "^2.0.3",
     "rss-parser": "^3.7.6",
